@@ -11,9 +11,9 @@ import Header from './components/Header';
 const App: React.FC = () => {
   return (
     <>
-      <Header />
       <Router>
         <AppProvider>
+          <Header />
           <Routes />
         </AppProvider>
 

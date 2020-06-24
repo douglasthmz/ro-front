@@ -25,14 +25,15 @@ export const AppTitle = styled.h1`
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 330px;
   height: 300px;
-  box-shadow: 2px 2px 3px #00000029;
+  box-shadow: 2px 2px 5px #00000029;
   border-radius: 8px;
   background-color: ${shade(0.01, '#f8f8ff')};
   align-items: center;
   justify-content: space-around;
   color: #019dda;
+  margin-top: 25px;
 
   p {
     font-size: 24px;

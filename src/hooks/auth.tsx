@@ -3,7 +3,16 @@ import api from '../services/api';
 
 interface AuthState {
   token: string;
-  admin: object;
+  admin: AdminData;
+}
+
+interface AdminData {
+  created_at: Date;
+  updated_at: Date;
+  id: string;
+  name: string;
+  role: object;
+  role_id: string;
 }
 
 interface SignInCredentials {
@@ -12,7 +21,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  admin: object;
+  admin: AdminData;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
