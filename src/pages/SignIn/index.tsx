@@ -65,7 +65,7 @@ const SignIn: React.FC = () => {
       <img src={GloboSign} alt="Rede Globo" />
       <AppTitle>RELATÓRIO OPERACIONAL</AppTitle>
       <Card>
-        <p>Login</p>
+        <p>Faça seu logon</p>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="email" icon={FiMail} placeholder="E-mail" />
           <Input
