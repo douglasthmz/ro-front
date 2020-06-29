@@ -13,6 +13,25 @@ export const Container = styled.div`
     height: 140px;
     margin-bottom: 25px;
   }
+
+  @media (max-height: 700px) {
+    img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-height: 632px) {
+    justify-content: flex-end;
+  }
+
+  @media (max-height: 560px) {
+    justify-content: center;
+    img {
+      display: none;
+    }
+  }
 `;
 
 export const AppTitle = styled.h1`
@@ -20,6 +39,19 @@ export const AppTitle = styled.h1`
   color: #019dda;
   font-weight: 700;
   margin-bottom: 25px;
+
+  @media (max-height: 700px) {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  @media (max-height: 560px) {
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 28px;
+  }
 `;
 
 export const Card = styled.div`
@@ -34,6 +66,7 @@ export const Card = styled.div`
   justify-content: space-around;
   color: #019dda;
   margin-top: 25px;
+  margin-bottom: 10px;
 
   p {
     font-size: 24px;
