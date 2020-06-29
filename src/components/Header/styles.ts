@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
+import { shade } from 'polished';
 
 export const Container = styled(AppBar)`
   background-color: #019dda !important;
@@ -26,13 +27,33 @@ export const LeftContent = styled.div`
 export const RightContent = styled.div`
   display: flex;
   align-items: center;
-  p {
+  div {
     margin-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
-export const SignOutButton = styled.button`
-  border: 0;
-  background: none;
-  color: #f8f8ff;
-  font-weight: 500;
+export const MenuButton = styled(Button)`
+  border: 0 !important;
+  background: none !important;
+  color: #f8f8ff !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  font-size: 16px !important;
+  transition: background-color 0.2s !important;
+
+  &:hover {
+    background-color: ${shade(0.2, '#019dda')} !important;
+  }
+
+  svg {
+    margin-left: 5px;
+  }
+`;
+
+export const MenuItemContainer = styled.div`
+  svg {
+    margin-right: 3px !important;
+  }
 `;

@@ -5,9 +5,14 @@ export const customStyles: StylesConfig = {
     ...provided,
     color: '#666360',
   }),
+  container: (styles) => ({
+    ...styles,
+    width: '100%',
+  }),
   control: (styles, state) => ({
     ...styles,
     height: '48px',
+    width: '100%',
     backgroundColor: '#f8f8ff',
     boxShadow: 'none',
     border: 0,

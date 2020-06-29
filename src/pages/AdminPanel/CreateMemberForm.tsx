@@ -1,20 +1,16 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { Form } from '@unform/web';
-import { FormHandles } from '@unform/core';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
-import { FiMail, FiLock, FiUser, FiArrowLeft } from 'react-icons/fi';
-
+import { Form } from '@unform/web';
+import { useHistory } from 'react-router-dom';
+import { FormHandles } from '@unform/core';
+import { FiUser, FiMail } from 'react-icons/fi';
+import { FormContainer } from './styles';
 import { useToast } from '../../hooks/toast';
-import getValidationErrors from '../../utils/getValidationErrors';
-
-import { Container, Card, Footer } from './styles';
-import GloboSign from '../../assets/rede-globo-logo-4.png';
-
-import Input from '../../components/input';
-import Button from '../../components/Button';
 import api from '../../services/api';
+import getValidationErrors from '../../utils/getValidationErrors';
+import Input from '../../components/input';
 import Select from '../../components/select';
+import Button from '../../components/Button';
 
 interface SignUpFormData {
   name: string;
@@ -27,11 +23,11 @@ interface Role {
   role: string;
 }
 
-const SignUp: React.FC = () => {
+const CreateMemberForm: React.FC = () => {
+  const [roles, setRoles] = useState([]);
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
-  const [roles, setRoles] = useState([]);
 
   useEffect(() => {
     const getRoles = async () => {
@@ -92,31 +88,15 @@ const SignUp: React.FC = () => {
     }));
 
   return (
-    <Container>
-      <img src={GloboSign} alt="Rede Globo" />
-      <Card>
-        <p>Faça seu cadastro</p>
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha"
-          />
-          <Select name="role_id" options={options} placeholder="Função" />
-          <Button type="submit">Cadastrar</Button>
-        </Form>
-        <Footer>
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar para logon
-          </Link>
-        </Footer>
-      </Card>
-    </Container>
+    <FormContainer>
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input name="name" icon={FiUser} placeholder="Nome" />
+        <Input name="email" icon={FiMail} placeholder="E-mail" />
+        <Select name="role_id" options={options} placeholder="Função" />
+        <Button type="submit">Cadastrar membro</Button>
+      </Form>
+    </FormContainer>
   );
 };
 
-export default SignUp;
+export default CreateMemberForm;
