@@ -3,6 +3,8 @@ import { Tabs, Tab } from '@material-ui/core';
 
 import { Container, AdminContent, FormContainer } from './styles';
 import CreateMemberForm from './CreateMemberForm';
+import CreateRoleForm from './CreateRoleForm';
+import CreateFailureOriginForm from './CreateFailureOriginForm';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -56,13 +58,13 @@ const AdminPage: React.FC = () => {
           <Tab label="Produtos" {...a11yProps(3)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          Funções
+          <CreateRoleForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <CreateMemberForm />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Tipos de falha
+          <CreateFailureOriginForm />
         </TabPanel>
         <TabPanel value={value} index={3}>
           Produtos

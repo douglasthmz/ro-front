@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
-import { List } from '@material-ui/core';
 
 export const Container = styled.div`
   display: flex;
@@ -33,7 +32,7 @@ export const AdminContent = styled.div`
     }
   }
 
-  span.PrivateTabIndicator-colorPrimary-2 {
+  span.MuiTabs-indicator {
     background-color: #019dda !important;
   }
 `;
