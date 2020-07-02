@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -22,9 +22,41 @@ interface SignUpFormData {
   role: string;
 }
 
+type PersistedRoleData = Array<{
+  id: string;
+  role: string;
+}>;
+
 const CreateRoleForm: React.FC = () => {
+  const [roles, setRoles] = useState([] as PersistedRoleData);
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+
+  useEffect(() => {
+    const getRoles = async () => {
+      const persistedRoles = await api.get('/roles');
+      setRoles(persistedRoles.data);
+    };
+
+    getRoles();
+  }, []);
+
+  const handleDelete = useCallback(
+    async (id) => {
+      try {
+        await api.delete(`/roles/${id}`);
+        const previousRoles = roles.filter((role) => role.id !== id);
+
+        setRoles(previousRoles);
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar esta função',
+        });
+      }
+    },
+    [addToast, roles],
+  );
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData): Promise<void> => {
@@ -38,11 +70,12 @@ const CreateRoleForm: React.FC = () => {
           abortEarly: false,
         });
 
-        // await api.post('/members', data);
-        console.log('dados da função', data);
-        // Lembrar de dar push neste novo membro na lista de membros
+        const response = await api.post('/roles', data);
+
+        setRoles([...roles, response.data]);
+
         addToast({
-          title: 'Cadastro do membro realizado!',
+          title: 'Cadastro da função realizado!',
           type: 'info',
         });
       } catch (err) {
@@ -57,45 +90,31 @@ const CreateRoleForm: React.FC = () => {
         });
       }
     },
-    [addToast],
+    [addToast, roles],
   );
-
-  const mockedMembers = [
-    { id: 1, full_name: 'Técnico de sistemas' },
-    { id: 2, full_name: 'Diretor de tv' },
-    { id: 3, full_name: 'Assitente AV 1' },
-    { id: 4, full_name: 'Assistente AV 2' },
-    { id: 5, full_name: 'Operador de câmera' },
-    { id: 6, full_name: 'Coordenador de TJ' },
-    { id: 7, full_name: 'Douglas Thomaz' },
-    { id: 8, full_name: 'Fulano da Silva' },
-    { id: 9, full_name: 'Lorem Ipśum' },
-    { id: 10, full_name: 'Douglas Thomaz' },
-    { id: 11, full_name: 'Fulano da Silva' },
-    { id: 12, full_name: 'Lorem Ipśum' },
-  ];
 
   return (
     <FormContainer>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Title>Cadastre uma nova função</Title>
-        <Input name="name" icon={MdWork} placeholder="Nome da Função" />
+        <Input name="role" icon={MdWork} placeholder="Nome da Função" />
         <Button type="submit">Cadastrar função</Button>
       </Form>
       <Divider />
       <Title>Lista de funções:</Title>
       <List aria-label="roles show">
-        {mockedMembers.map((member) => (
-          <div key={member.id}>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary={member.full_name} />
-              <ListItemIcon>
-                <FiXCircle color="red" size={24} />
-              </ListItemIcon>
-            </ListItem>
-          </div>
-        ))}
+        {roles &&
+          roles.map((role) => (
+            <div key={role.id}>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary={role.role} />
+                <ListItemIcon onClick={() => handleDelete(role.id)}>
+                  <FiXCircle color="red" size={24} />
+                </ListItemIcon>
+              </ListItem>
+            </div>
+          ))}
       </List>
     </FormContainer>
   );
