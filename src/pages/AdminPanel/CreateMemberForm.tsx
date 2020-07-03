@@ -61,6 +61,9 @@ const CreateMemberForm: React.FC = () => {
         // await api.post('/members', data);
         console.log('dados do membro', data);
         // Lembrar de dar push neste novo membro na lista de membros
+
+        // formRef.current?.reset();
+
         addToast({
           title: 'Cadastro do membro realizado!',
           type: 'info',
@@ -113,6 +116,7 @@ const CreateMemberForm: React.FC = () => {
         <Select name="role_id" options={options} placeholder="Função" />
         <Button type="submit">Cadastrar membro</Button>
       </Form>
+      <Divider />
       <Divider />
       <Title>Lista de membros:</Title>
       <List aria-label="members show">

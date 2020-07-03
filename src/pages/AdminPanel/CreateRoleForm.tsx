@@ -48,10 +48,15 @@ const CreateRoleForm: React.FC = () => {
         const previousRoles = roles.filter((role) => role.id !== id);
 
         setRoles(previousRoles);
+
+        addToast({
+          title: 'Remoção realizada com sucesso!',
+          type: 'info',
+        });
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro ao deletar esta função',
+          title: 'Erro ao deletar esta falha',
         });
       }
     },
@@ -73,6 +78,8 @@ const CreateRoleForm: React.FC = () => {
         const response = await api.post('/roles', data);
 
         setRoles([...roles, response.data]);
+
+        formRef.current?.reset();
 
         addToast({
           title: 'Cadastro da função realizado!',
@@ -100,6 +107,7 @@ const CreateRoleForm: React.FC = () => {
         <Input name="role" icon={MdWork} placeholder="Nome da Função" />
         <Button type="submit">Cadastrar função</Button>
       </Form>
+      <Divider />
       <Divider />
       <Title>Lista de funções:</Title>
       <List aria-label="roles show">

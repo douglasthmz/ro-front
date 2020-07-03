@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -23,9 +23,47 @@ interface SignUpFormData {
   origin: string;
 }
 
+type PersistedFailureOriginData = Array<{
+  id: string;
+  type: string;
+  origin: string;
+}>;
+
 const CreateFailureOriginForm: React.FC = () => {
+  const [failures, setFailures] = useState([] as PersistedFailureOriginData);
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+
+  useEffect(() => {
+    const getRoles = async () => {
+      const persistedFailures = await api.get('/failures');
+      setFailures(persistedFailures.data);
+    };
+
+    getRoles();
+  }, []);
+
+  const handleDelete = useCallback(
+    async (id) => {
+      try {
+        await api.delete(`/failures/${id}`);
+        const previousFailures = failures.filter((role) => role.id !== id);
+
+        setFailures(previousFailures);
+
+        addToast({
+          title: 'Remoção realizada com sucesso!',
+          type: 'info',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar esta função',
+        });
+      }
+    },
+    [addToast, failures],
+  );
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData): Promise<void> => {
@@ -40,9 +78,13 @@ const CreateFailureOriginForm: React.FC = () => {
           abortEarly: false,
         });
 
-        // await api.post('/members', data);
-        console.log('dados do tipo da falha', data);
-        // Lembrar de dar push neste novo membro na lista de membros
+        const response = await api.post('/failures', data);
+        console.log('dados do tipo da falha', response.data);
+
+        setFailures([...failures, response.data]);
+
+        formRef.current?.reset();
+
         addToast({
           title: 'Cadastro do tipo de falha realizado!',
           type: 'info',
@@ -59,7 +101,7 @@ const CreateFailureOriginForm: React.FC = () => {
         });
       }
     },
-    [addToast],
+    [addToast, failures],
   );
 
   const options = [
@@ -71,19 +113,6 @@ const CreateFailureOriginForm: React.FC = () => {
       value: 'Operacional',
       label: 'Operacional',
     },
-  ];
-
-  const mockedMembers = [
-    { id: 1, type: 'Técnica', origin: 'Microfone' },
-    { id: 1, type: 'Operacional', origin: 'Apresentador' },
-    { id: 1, type: 'Técnica', origin: 'Câmera' },
-    { id: 1, type: 'Operacional', origin: 'Operador de UP' },
-    { id: 1, type: 'Técnica', origin: 'Fibra' },
-    { id: 1, type: 'Operacional', origin: 'Repórter' },
-    { id: 1, type: 'Técnica', origin: 'Live U' },
-    { id: 1, type: 'Operacional', origin: 'Operador de áudio' },
-    { id: 1, type: 'Técnica', origin: 'Bateria' },
-    { id: 1, type: 'Operacional', origin: 'Técnico de sistemas' },
   ];
 
   return (
@@ -99,14 +128,15 @@ const CreateFailureOriginForm: React.FC = () => {
         <Button type="submit">Cadastrar tipo de falha</Button>
       </Form>
       <Divider />
+      <Divider />
       <Title>Lista de tipos de falha:</Title>
       <List aria-label="members show">
-        {mockedMembers.map((member) => (
+        {failures.map((failure) => (
           <>
             <Divider />
-            <ListItem key={member.id} button>
-              <ListItemText primary={`${member.type}/${member.origin}`} />
-              <ListItemIcon>
+            <ListItem key={failure.id} button>
+              <ListItemText primary={`${failure.type}/${failure.origin}`} />
+              <ListItemIcon onClick={() => handleDelete(failure.id)}>
                 <FiXCircle color="red" size={24} />
               </ListItemIcon>
             </ListItem>
