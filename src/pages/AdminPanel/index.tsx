@@ -55,7 +55,6 @@ const AdminPage: React.FC = () => {
           <Tab label="Funções" {...a11yProps(0)} />
           <Tab label="Membros" {...a11yProps(1)} />
           <Tab label="Tipos de falha" {...a11yProps(2)} />
-          <Tab label="Produtos" {...a11yProps(3)} />
         </Tabs>
         <TabPanel value={value} index={0}>
           <CreateRoleForm />
@@ -65,9 +64,6 @@ const AdminPage: React.FC = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <CreateFailureOriginForm />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Produtos
         </TabPanel>
       </AdminContent>
     </Container>
