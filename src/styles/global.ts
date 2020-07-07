@@ -11,6 +11,19 @@ export default createGlobalStyle`
   body{
     background: #f8f8ff;
     -webkit-font-smoothing: antialiased;
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #a2a2a2;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #f8f8ff;
+    }
   }
 
   body, input, button{

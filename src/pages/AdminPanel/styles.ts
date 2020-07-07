@@ -10,6 +10,7 @@ export const Container = styled.div`
 
 export const AdminContent = styled.div`
   max-width: 1000px;
+  min-width: 500px;
   min-height: 500px;
   display: flex;
   margin: 100px auto 25px auto;
@@ -41,7 +42,7 @@ export const FormContainer = styled.div`
   width: 100% !important;
   form {
     display: flex;
-    max-width: 500px;
+    max-width: 400px;
     margin: 25px auto;
     flex-direction: column;
     justify-content: center;
