@@ -47,6 +47,10 @@ export const ProductCard = styled.div`
   & + & {
     margin-left: 50px;
   }
+
+  &:hover {
+    background-color: ${shade(0.03, '#f8f8ff')};
+  }
 `;
 
 export const DayPartTitle = styled.div`

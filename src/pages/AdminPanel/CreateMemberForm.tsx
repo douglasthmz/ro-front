@@ -19,8 +19,8 @@ import Select from '../../components/select';
 import Button from '../../components/Button';
 
 interface SignUpFormData {
-  name: string;
-  email: string;
+  full_name: string;
+  role_id: string;
 }
 
 interface Role {
@@ -28,18 +28,27 @@ interface Role {
   role: string;
 }
 
+type PersistedMemberData = Array<{
+  id: string;
+  full_name: string;
+  role_id: string;
+}>;
+
 const CreateMemberForm: React.FC = () => {
   const [roles, setRoles] = useState([]);
+  const [members, setMembers] = useState([] as PersistedMemberData);
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
 
   useEffect(() => {
-    const getRoles = async () => {
-      const response = await api.get('/roles');
-      setRoles(response.data);
+    const getServerData = async () => {
+      const roleResponse = await api.get('/roles');
+      setRoles(roleResponse.data);
+      const memberResponse = await api.get('/members');
+      setMembers(memberResponse.data);
     };
 
-    getRoles();
+    getServerData();
   }, []);
 
   const handleSubmit = useCallback(
@@ -47,10 +56,7 @@ const CreateMemberForm: React.FC = () => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string()
-            .required('Email obrigatório')
-            .email('Digite um email válido'),
+          full_name: Yup.string().required('Nome obrigatório'),
           role_id: Yup.string().required('Função obrigatória'),
         });
 
@@ -58,11 +64,12 @@ const CreateMemberForm: React.FC = () => {
           abortEarly: false,
         });
 
-        // await api.post('/members', data);
+        const response = await api.post('/members', data);
         console.log('dados do membro', data);
-        // Lembrar de dar push neste novo membro na lista de membros
 
-        // formRef.current?.reset();
+        setMembers([...members, response.data]);
+
+        formRef.current?.reset();
 
         addToast({
           title: 'Cadastro do membro realizado!',
@@ -82,7 +89,7 @@ const CreateMemberForm: React.FC = () => {
         });
       }
     },
-    [addToast],
+    [addToast, members],
   );
 
   const options =
@@ -92,27 +99,11 @@ const CreateMemberForm: React.FC = () => {
       label: singleRole.role,
     }));
 
-  const mockedMembers = [
-    { id: 1, full_name: 'Douglas Thomaz' },
-    { id: 2, full_name: 'Fulano da Silva' },
-    { id: 3, full_name: 'Lorem Ipśum' },
-    { id: 4, full_name: 'Douglas Thomaz' },
-    { id: 5, full_name: 'Fulano da Silva' },
-    { id: 6, full_name: 'Lorem Ipśum' },
-    { id: 7, full_name: 'Douglas Thomaz' },
-    { id: 8, full_name: 'Fulano da Silva' },
-    { id: 9, full_name: 'Lorem Ipśum' },
-    { id: 10, full_name: 'Douglas Thomaz' },
-    { id: 11, full_name: 'Fulano da Silva' },
-    { id: 12, full_name: 'Lorem Ipśum' },
-  ];
-
   return (
     <FormContainer>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Title>Cadastre um novo membro</Title>
-        <Input name="name" icon={FiUser} placeholder="Nome Completo" />
-        <Input name="email" icon={FiMail} placeholder="E-mail Corp" />
+        <Input name="full_name" icon={FiUser} placeholder="Nome Completo" />
         <Select name="role_id" options={options} placeholder="Função" />
         <Button type="submit">Cadastrar membro</Button>
       </Form>
@@ -120,7 +111,7 @@ const CreateMemberForm: React.FC = () => {
       <Divider />
       <Title>Lista de membros:</Title>
       <List aria-label="members show">
-        {mockedMembers.map((member) => (
+        {members.map((member) => (
           <>
             <Divider />
             <ListItem key={member.id} button>
