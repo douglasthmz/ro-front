@@ -92,6 +92,28 @@ const CreateMemberForm: React.FC = () => {
     [addToast, members],
   );
 
+  const handleDelete = useCallback(
+    async (id) => {
+      try {
+        await api.delete(`/members/${id}`);
+        const previousMembers = members.filter((member) => member.id !== id);
+
+        setMembers(previousMembers);
+
+        addToast({
+          title: 'Remoção realizada com sucesso!',
+          type: 'info',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar este membro',
+        });
+      }
+    },
+    [addToast, members],
+  );
+
   const options =
     roles &&
     roles.map((singleRole: Role) => ({
@@ -116,7 +138,7 @@ const CreateMemberForm: React.FC = () => {
             <Divider />
             <ListItem key={member.id} button>
               <ListItemText primary={member.full_name} />
-              <ListItemIcon>
+              <ListItemIcon onClick={() => handleDelete(member.id)}>
                 <FiXCircle color="red" size={24} />
               </ListItemIcon>
             </ListItem>
