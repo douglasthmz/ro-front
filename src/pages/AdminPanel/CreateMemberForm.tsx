@@ -32,6 +32,7 @@ type PersistedMemberData = Array<{
   id: string;
   full_name: string;
   role_id: string;
+  role: Role;
 }>;
 
 const CreateMemberForm: React.FC = () => {
@@ -137,7 +138,11 @@ const CreateMemberForm: React.FC = () => {
           <>
             <Divider />
             <ListItem key={member.id} button>
-              <ListItemText primary={member.full_name} />
+              <ListItemText
+                primary={`${member.full_name} / ${
+                  member.role && member.role.role
+                }`}
+              />
               <ListItemIcon onClick={() => handleDelete(member.id)}>
                 <FiXCircle color="red" size={24} />
               </ListItemIcon>
