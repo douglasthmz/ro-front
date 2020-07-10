@@ -63,20 +63,21 @@ export const DayPartContainer = styled.div`
 export const ProductCard = styled.div`
   flex: 0 0 auto;
   width: 300px;
-  height: 400px;
+  height: 390px;
   box-shadow: 2px 2px 5px #00000029;
-  border-radius: 8px;
-  background-color: ${shade(0.01, '#f8f8ff')};
+  border-radius: 18px;
+  background-color: ${shade(0.015, '#f8f8ff')};
   margin-top: 20px;
   color: #585858;
   text-transform: uppercase;
+  transition: background-color linear 0.1s;
 
   & + & {
     margin-left: 50px;
   }
 
   &:hover {
-    background-color: ${shade(0.03, '#f8f8ff')};
+    background-color: ${shade(0.045, '#f8f8ff')};
   }
 `;
 
@@ -92,6 +93,7 @@ export const DayPartTitle = styled.div`
     margin-bottom: 10px;
     color: #a2a2a2;
     font-weight: 500;
+    font-size: 22px;
   }
 `;
 
@@ -99,21 +101,38 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-top: 10px;
   img {
     width: 124px;
     height: 124px;
+    border-radius: 50%;
   }
 `;
 export const CardProfile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  width: 45%;
+  height: 100%;
   h1 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #a2a2a2;
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+  }
+
+  h3 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #a2a2a2;
+    padding-bottom: 8px;
+    margin-bottom: 5px;
   }
 `;
 export const CardBody = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
 `;
 export const CardInfo = styled.div`
   display: flex;
@@ -121,7 +140,7 @@ export const CardInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #a2a2a2;
-  margin: 0 6px;
+  margin: 0 8px;
   h3 {
     display: flex;
     width: 50%;

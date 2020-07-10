@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { format } from 'date-fns';
 import {
   Container,
   DayPartContainer,
@@ -12,6 +12,7 @@ import {
   CardFooter,
 } from './styles';
 import api from '../../services/api';
+import Clock from '../../components/Clock';
 
 interface StoredProduct {
   id: string;
@@ -56,73 +57,7 @@ const Dashboard: React.FC = () => {
     getProducts();
   }, []);
 
-  return !morningProducts || !eveningProducts || !afterProducts ? (
-    <Container>
-      <DayPartTitle>
-        <span>Manhã</span>
-      </DayPartTitle>
-      <DayPartContainer>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-      </DayPartContainer>
-
-      <DayPartTitle>
-        {' '}
-        <span>Tarde</span>
-      </DayPartTitle>
-
-      <DayPartContainer>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-      </DayPartContainer>
-
-      <DayPartTitle>
-        {' '}
-        <span>Noite</span>
-      </DayPartTitle>
-
-      <DayPartContainer>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-        <ProductCard>
-          <h1>DashBoard</h1>
-        </ProductCard>
-      </DayPartContainer>
-    </Container>
-  ) : (
+  return (
     <Container>
       <DayPartTitle>
         <span>Manhã</span>
@@ -158,11 +93,10 @@ const Dashboard: React.FC = () => {
                 </CardInfo>
               </CardBody>
               <CardFooter>
-                <h1>Relógio</h1>
-                {/* <Clock
-              initialTime={products[2].initial_time}
-              endTime={products[2].end_time}
-            /> */}
+                <Clock
+                  initialTime={product.initial_time}
+                  endTime={product.end_time}
+                />
               </CardFooter>
             </ProductCard>
           ))}
@@ -204,11 +138,10 @@ const Dashboard: React.FC = () => {
                 </CardInfo>
               </CardBody>
               <CardFooter>
-                <h1>Relógio</h1>
-                {/* <Clock
-              initialTime={products[2].initial_time}
-              endTime={products[2].end_time}
-            /> */}
+                <Clock
+                  initialTime={product.initial_time}
+                  endTime={product.end_time}
+                />
               </CardFooter>
             </ProductCard>
           ))}
@@ -250,11 +183,10 @@ const Dashboard: React.FC = () => {
                 </CardInfo>
               </CardBody>
               <CardFooter>
-                <h1>Relógio</h1>
-                {/* <Clock
-              initialTime={products[2].initial_time}
-              endTime={products[2].end_time}
-            /> */}
+                <Clock
+                  initialTime={product.initial_time}
+                  endTime={product.end_time}
+                />
               </CardFooter>
             </ProductCard>
           ))}
