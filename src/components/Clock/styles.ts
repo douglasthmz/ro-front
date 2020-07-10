@@ -35,5 +35,6 @@ export const Container = styled.div<ContainerProps>`
       props.isTimer &&
       css`
         background-color: #f8f8ff;
+        font-size: 20px;
       `}
 `;
