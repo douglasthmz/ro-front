@@ -18,6 +18,7 @@ export const LeftContent = styled.div`
   display: flex;
   align-items: center;
   font-weight: 500;
+  cursor: pointer;
   img {
     height: 53px;
     width: 53px;

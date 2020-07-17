@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { FiUser, FiMail, FiXCircle } from 'react-icons/fi';
+import { FiUser, FiXCircle } from 'react-icons/fi';
 import {
   List,
   ListItem,
@@ -66,7 +66,6 @@ const CreateMemberForm: React.FC = () => {
         });
 
         const response = await api.post('/members', data);
-        console.log('dados do membro', data);
 
         setMembers([...members, response.data]);
 
@@ -139,9 +138,11 @@ const CreateMemberForm: React.FC = () => {
             <Divider />
             <ListItem key={member.id} button>
               <ListItemText
-                primary={`${member.full_name} / ${
-                  member.role && member.role.role
-                }`}
+                primary={
+                  member.role_id
+                    ? `${member.full_name} / ${member.role.role}`
+                    : `${member.full_name}`
+                }
               />
               <ListItemIcon onClick={() => handleDelete(member.id)}>
                 <FiXCircle color="red" size={24} />

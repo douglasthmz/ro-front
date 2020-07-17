@@ -55,7 +55,7 @@ const Header: React.FC = () => {
       <Content>
         {admin && (
           <>
-            <LeftContent>
+            <LeftContent onClick={() => history.push('/dashboard')}>
               <img src={HeaderLogo} alt="RedeGlobo" />
               <p>RELATÓRIO OPERACIONAL</p>
             </LeftContent>

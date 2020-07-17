@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   DayPartContainer,
@@ -28,6 +28,8 @@ interface StoredProduct {
 }
 
 const Dashboard: React.FC = () => {
+  const history = useHistory();
+
   const [morningProducts, setMorningProducts] = useState([] as StoredProduct[]);
   const [afterProducts, setAfterProducts] = useState([] as StoredProduct[]);
   const [eveningProducts, setEveningProducts] = useState([] as StoredProduct[]);
@@ -65,7 +67,10 @@ const Dashboard: React.FC = () => {
       <DayPartContainer>
         {morningProducts &&
           morningProducts.map((product) => (
-            <ProductCard key={product.id}>
+            <ProductCard
+              key={product.id}
+              onClick={() => history.push(`/report/${product.id}`)}
+            >
               <CardHeader>
                 <img src={product.avatar_link} alt="avatar" />
                 <CardProfile>
