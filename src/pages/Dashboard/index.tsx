@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
 import {
   Container,
   DayPartContainer,
@@ -33,6 +34,7 @@ const Dashboard: React.FC = () => {
   const [morningProducts, setMorningProducts] = useState([] as StoredProduct[]);
   const [afterProducts, setAfterProducts] = useState([] as StoredProduct[]);
   const [eveningProducts, setEveningProducts] = useState([] as StoredProduct[]);
+  const Today = parseInt(format(Date.now(), 'i'), 10);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -66,45 +68,58 @@ const Dashboard: React.FC = () => {
       </DayPartTitle>
       <DayPartContainer>
         {morningProducts &&
-          morningProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              onClick={() => history.push(`/report/${product.id}`)}
-            >
-              <CardHeader>
-                <img src={product.avatar_link} alt="avatar" />
-                <CardProfile>
-                  <h1>{product.alias}</h1>
-                  <h3>{product.initial_time}</h3>
-                  <h3>{product.control}</h3>
-                </CardProfile>
-              </CardHeader>
-              <CardBody>
-                <CardInfo>
-                  <h3>{product.studio}</h3>
-                  <h3>{product.site}</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Checklist</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Matérias</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Relatório</h3>
-                  <h3>Em breve</h3>
-                </CardInfo>
-              </CardBody>
-              <CardFooter>
-                <Clock
-                  initialTime={product.initial_time}
-                  endTime={product.end_time}
-                />
-              </CardFooter>
-            </ProductCard>
-          ))}
+          morningProducts
+            .sort((a, b) =>
+              a.initial_time < b.initial_time
+                ? -1
+                : a.initial_time > b.initial_time
+                ? 1
+                : 0,
+            )
+            .map((product) => (
+              <ProductCard
+                key={product.id}
+                onClick={() => history.push(`/report/${product.id}`)}
+                haveExibition={product.exibition_days.includes(Today + 1)}
+              >
+                <CardHeader
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <img src={product.avatar_link} alt="avatar" />
+                  <CardProfile>
+                    <h1>{product.alias}</h1>
+                    <h3>{product.initial_time}</h3>
+                    <h3>{product.control}</h3>
+                  </CardProfile>
+                </CardHeader>
+                <CardBody>
+                  <CardInfo>
+                    <h3>{product.studio}</h3>
+                    <h3>{product.site}</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Checklist</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Matérias</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Relatório</h3>
+                    <h3>Em breve</h3>
+                  </CardInfo>
+                </CardBody>
+                <CardFooter
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <Clock
+                    initialTime={product.initial_time}
+                    endTime={product.end_time}
+                  />
+                </CardFooter>
+              </ProductCard>
+            ))}
       </DayPartContainer>
 
       <DayPartTitle>
@@ -114,42 +129,57 @@ const Dashboard: React.FC = () => {
 
       <DayPartContainer>
         {afterProducts &&
-          afterProducts.map((product) => (
-            <ProductCard key={product.id}>
-              <CardHeader>
-                <img src={product.avatar_link} alt="avatar" />
-                <CardProfile>
-                  <h1>{product.alias}</h1>
-                  <h3>{product.initial_time}</h3>
-                  <h3>{product.control}</h3>
-                </CardProfile>
-              </CardHeader>
-              <CardBody>
-                <CardInfo>
-                  <h3>{product.studio}</h3>
-                  <h3>{product.site}</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Checklist</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Matérias</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Relatório</h3>
-                  <h3>Em breve</h3>
-                </CardInfo>
-              </CardBody>
-              <CardFooter>
-                <Clock
-                  initialTime={product.initial_time}
-                  endTime={product.end_time}
-                />
-              </CardFooter>
-            </ProductCard>
-          ))}
+          afterProducts
+            .sort((a, b) =>
+              a.initial_time < b.initial_time
+                ? -1
+                : a.initial_time > b.initial_time
+                ? 1
+                : 0,
+            )
+            .map((product) => (
+              <ProductCard
+                key={product.id}
+                haveExibition={product.exibition_days.includes(Today + 1)}
+              >
+                <CardHeader
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <img src={product.avatar_link} alt="avatar" />
+                  <CardProfile>
+                    <h1>{product.alias}</h1>
+                    <h3>{product.initial_time}</h3>
+                    <h3>{product.control}</h3>
+                  </CardProfile>
+                </CardHeader>
+                <CardBody>
+                  <CardInfo>
+                    <h3>{product.studio}</h3>
+                    <h3>{product.site}</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Checklist</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Matérias</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Relatório</h3>
+                    <h3>Em breve</h3>
+                  </CardInfo>
+                </CardBody>
+                <CardFooter
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <Clock
+                    initialTime={product.initial_time}
+                    endTime={product.end_time}
+                  />
+                </CardFooter>
+              </ProductCard>
+            ))}
       </DayPartContainer>
 
       <DayPartTitle>
@@ -159,42 +189,57 @@ const Dashboard: React.FC = () => {
 
       <DayPartContainer>
         {eveningProducts &&
-          eveningProducts.map((product) => (
-            <ProductCard key={product.id}>
-              <CardHeader>
-                <img src={product.avatar_link} alt="avatar" />
-                <CardProfile>
-                  <h1>{product.alias}</h1>
-                  <h3>{product.initial_time}</h3>
-                  <h3>{product.control}</h3>
-                </CardProfile>
-              </CardHeader>
-              <CardBody>
-                <CardInfo>
-                  <h3>{product.studio}</h3>
-                  <h3>{product.site}</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Checklist</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Matérias</h3>
-                  <h3>xx//xx</h3>
-                </CardInfo>
-                <CardInfo>
-                  <h3>Relatório</h3>
-                  <h3>Em breve</h3>
-                </CardInfo>
-              </CardBody>
-              <CardFooter>
-                <Clock
-                  initialTime={product.initial_time}
-                  endTime={product.end_time}
-                />
-              </CardFooter>
-            </ProductCard>
-          ))}
+          eveningProducts
+            .sort((a, b) =>
+              a.initial_time < b.initial_time
+                ? -1
+                : a.initial_time > b.initial_time
+                ? 1
+                : 0,
+            )
+            .map((product) => (
+              <ProductCard
+                key={product.id}
+                haveExibition={product.exibition_days.includes(Today + 1)}
+              >
+                <CardHeader
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <img src={product.avatar_link} alt="avatar" />
+                  <CardProfile>
+                    <h1>{product.alias}</h1>
+                    <h3>{product.initial_time}</h3>
+                    <h3>{product.control}</h3>
+                  </CardProfile>
+                </CardHeader>
+                <CardBody>
+                  <CardInfo>
+                    <h3>{product.studio}</h3>
+                    <h3>{product.site}</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Checklist</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Matérias</h3>
+                    <h3>xx//xx</h3>
+                  </CardInfo>
+                  <CardInfo>
+                    <h3>Relatório</h3>
+                    <h3>Em breve</h3>
+                  </CardInfo>
+                </CardBody>
+                <CardFooter
+                  haveExibition={product.exibition_days.includes(Today + 1)}
+                >
+                  <Clock
+                    initialTime={product.initial_time}
+                    endTime={product.end_time}
+                  />
+                </CardFooter>
+              </ProductCard>
+            ))}
       </DayPartContainer>
     </Container>
   );

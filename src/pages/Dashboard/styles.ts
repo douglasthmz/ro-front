@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
@@ -60,7 +60,11 @@ export const DayPartContainer = styled.div`
   }
 `;
 
-export const ProductCard = styled.div`
+interface ExibitionProp {
+  haveExibition?: boolean;
+}
+
+export const ProductCard = styled.div<ExibitionProp>`
   flex: 0 0 auto;
   width: 300px;
   height: 390px;
@@ -79,6 +83,15 @@ export const ProductCard = styled.div`
   &:hover {
     background-color: ${shade(0.045, '#f8f8ff')};
   }
+
+  ${(props) =>
+    !props.haveExibition &&
+    css`
+      background-color: ${shade(0.2, '#f8f8ff')};
+      &:hover {
+        background-color: ${shade(0.25, '#f8f8ff')};
+      }
+    `}
 `;
 
 export const DayPartTitle = styled.div`
@@ -97,7 +110,7 @@ export const DayPartTitle = styled.div`
   }
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<ExibitionProp>`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -106,6 +119,11 @@ export const CardHeader = styled.div`
     width: 124px;
     height: 124px;
     border-radius: 50%;
+    ${(props) =>
+      !props.haveExibition &&
+      css`
+        -webkit-filter: brightness(0.3);
+      `}
   }
 `;
 export const CardProfile = styled.div`
@@ -158,9 +176,14 @@ export const CardInfo = styled.div`
     margin-top: 10px;
   }
 `;
-export const CardFooter = styled.div`
+export const CardFooter = styled.div<ExibitionProp>`
   display: flex;
   margin-top: 20px;
   align-items: flex-end;
   justify-content: center;
+  ${(props) =>
+    !props.haveExibition &&
+    css`
+      display: none;
+    `}
 `;
