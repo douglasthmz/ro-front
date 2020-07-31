@@ -79,7 +79,6 @@ const CreateFailureOriginForm: React.FC = () => {
         });
 
         const response = await api.post('/failures', data);
-        console.log('dados do tipo da falha', response.data);
 
         setFailures([...failures, response.data]);
 

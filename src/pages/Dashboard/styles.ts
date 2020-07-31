@@ -152,6 +152,11 @@ export const CardProfile = styled.div`
 export const CardBody = styled.div`
   margin-top: 10px;
 `;
+
+interface ReportInfo {
+  reportInfo?: boolean;
+}
+
 export const CardInfo = styled.div`
   display: flex;
   flex-direction: row;
@@ -185,5 +190,16 @@ export const CardFooter = styled.div<ExibitionProp>`
     !props.haveExibition &&
     css`
       display: none;
+    `}
+`;
+
+export const ReportData = styled.h3<ReportInfo>`
+  color: #c53030;
+  font-size: 14px;
+  font-weight: 500;
+  ${(props) =>
+    props.reportInfo &&
+    css`
+      color: #308a3f;
     `}
 `;
