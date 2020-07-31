@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Container } from './styles';
 import { useExibition } from '../../hooks/exibition';
 
@@ -11,7 +11,7 @@ const Report: React.FC = () => {
   const {
     currentReport,
     last15Exibitions,
-    setReport,
+    // setReport,
     setupProductExibition,
   } = useExibition();
 
