@@ -36,6 +36,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
+      {console.log(afterProducts)}
       <DayPartTitle>
         <span>Manhã</span>
       </DayPartTitle>
@@ -53,7 +54,7 @@ const Dashboard: React.FC = () => {
               const isReportDone = product.exibitions.filter(
                 (exibition) =>
                   !exibition.report_sent &&
-                  format(new Date(exibition.exibition_date), 'Y-MM-dd') ===
+                  format(new Date(exibition.exibition_date), 'Y-MM-dd') !==
                     format(new Date(Date.now()), 'Y-MM-dd'),
               );
 
@@ -127,7 +128,7 @@ const Dashboard: React.FC = () => {
               const isReportDone = product.exibitions.filter(
                 (exibition) =>
                   !exibition.report_sent &&
-                  format(new Date(exibition.exibition_date), 'Y-MM-dd') ===
+                  format(new Date(exibition.exibition_date), 'Y-MM-dd') !==
                     format(new Date(Date.now()), 'Y-MM-dd'),
               );
 
@@ -162,6 +163,7 @@ const Dashboard: React.FC = () => {
                     </CardInfo>
                     <CardInfo>
                       <h3>Relatório</h3>
+                      {console.log(isReportDone)}
                       <ReportData reportInfo={!(isReportDone.length > 0)}>
                         {isReportDone && isReportDone.length > 0
                           ? `${isReportDone.length} de 15 não feito`
@@ -201,7 +203,7 @@ const Dashboard: React.FC = () => {
               const isReportDone = product.exibitions.filter(
                 (exibition) =>
                   !exibition.report_sent &&
-                  format(new Date(exibition.exibition_date), 'Y-MM-dd') ===
+                  format(new Date(exibition.exibition_date), 'Y-MM-dd') !==
                     format(new Date(Date.now()), 'Y-MM-dd'),
               );
 
