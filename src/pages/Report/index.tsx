@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from './styles';
 import { useExibition } from '../../hooks/exibition';
+import ReportHeader from './ReportHeader';
 
 interface IdParams {
   id: string;
@@ -11,7 +12,7 @@ const Report: React.FC = () => {
   const {
     currentReport,
     last15Exibitions,
-    // setReport,
+    setReport,
     setupProductExibition,
   } = useExibition();
 
@@ -24,12 +25,12 @@ const Report: React.FC = () => {
   }, [id, setupProductExibition]);
   return (
     <Container>
-      <h1>
-        Em construção, {console.log(last15Exibitions || 'não deu')}{' '}
-        {console.log(currentReport || 'não deu')}
-      </h1>
-      {currentReport && (
-        <img src={currentReport.exibition.product.avatar_link} alt="" />
+      {last15Exibitions && currentReport && (
+        <ReportHeader
+          setReport={setReport}
+          last15Exibitions={last15Exibitions}
+          currentReport={currentReport}
+        />
       )}
     </Container>
   );

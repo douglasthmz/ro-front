@@ -6,7 +6,7 @@ interface ExibitionState {
   currentReport: ReportData;
 }
 
-interface ReportData {
+export interface ReportData {
   id: string;
   exibition_id: string;
   memberlist_id?: string;
@@ -31,13 +31,13 @@ interface ProductData {
   updated_at: Date;
 }
 
-interface ExibitionData {
+export interface ExibitionData {
   id: string;
   admin_id: string;
   product_id: string;
   exibition_date: Date;
   ready_time: string;
-  report_sent: string;
+  report_sent: boolean;
   created_at: Date;
   updated_at: Date;
   product: ProductData;

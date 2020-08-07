@@ -11,9 +11,9 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   justify-content: center;
   box-shadow: 2px 2px 5px #00000029;
-  width: 70%;
-  height: 35px;
-  margin: 0 auto;
+  width: 100%;
+  height: 40px;
+  /* margin: 0 auto; */
   font-weight: 500;
   font-size: 18px;
   border-radius: 4px;

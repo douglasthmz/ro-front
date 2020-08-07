@@ -24,6 +24,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "import/no-duplicates": "off",
     "no-restricted-syntax": "off",
     "no-nested-ternary": "off",
     "camelcase": "off",
